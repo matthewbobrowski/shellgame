@@ -1,0 +1,23 @@
+Long story short, I was watching a video on YouTube with the title "Ain't No Party Like A Unix Party" (Link: https://www.youtube.com/watch?v=o5cASgBEXWY) where @Metlstorm presented various cool "tricks" that can be performed within UNIX like environments. I personally thought "Shellgame" (Link: https://youtu.be/o5cASgBEXWY?t=1515) was rather awesome, so I decided to take it upon myself to learn about the inotify API that is made available by the Linux kernel and implement my own version of this program.
+
+Funnily enough, I was talking to a friend @Steve2 at work about some of the techniques demonstrated within the video and started to tell him how I intend to write my very own version of Shellgame that conceptually provides the same type of functionality. At this particular point, I really didn't know he was actually friends with @Metlstorm, and the next thing you know I'm talking to @Metlstorm via email about his version of the program he wrote some time ago. Unfortunately, he didn't have the source code available so I took it upon myself to write my own implementation. 
+
+Anyway, enough of the backstory. 
+
+This is a program that can be used to hide files from the root user, as a non root user. It has been designed to avoid system administrators from discovering your stash of tools, files, and any other data you have dumped onto a system you've possibly owned via their usual system administrator operations i.e. backups, HIDS, etc. The program makes use of the inotify API made available within the Linux kernel from version >= 2.6.13. The idea is to register watchers on directories above the file object(s) being watched and detect incoming directory traversal like behaviour so that the files can be temporarily "hidden" until it's safe to write the file back down to disk. Logic flow at a very high level is as follows:
+	
+	[1] Open file handle for all file object(s) that are to be hidden
+	[2] Wait for incoming path traversal
+	[3] When event(s) is detected; unlink object(s) from disk
+	[4] Wait for traversal to go past
+	[5] Write file(s) back down to the disk
+
+There's probably a better way of implementing this, but I couldn't really be bothered investing the time in creating a "perfect" solution as I literally hacked this up on the train at 6:00 AM on the way to work. Perhaps when I have some spare cycles I'll look at developing a more robust solution.
+
+Build:
+	make
+
+Running:
+	./shellgame [/path/to/the/file/that/is/to/be/hidden/file.txt]
+
+Note: This program should be used for educational purposes ONLY and I take no responsibility if someone decides to use it for any type of malicious intent.
