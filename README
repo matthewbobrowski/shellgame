@@ -1,3 +1,5 @@
+* TODO: I should probably change this to use fanotify rather than inotify
+
 Long story short, I was watching a video on YouTube with the title "Ain't No Party Like A Unix Party" (Link: https://www.youtube.com/watch?v=o5cASgBEXWY) where @Metlstorm presented various cool "tricks" that can be performed within UNIX like environments. I personally thought "Shellgame" (Link: https://youtu.be/o5cASgBEXWY?t=1515) was rather awesome, so I decided to take it upon myself to learn about the inotify API that is made available by the Linux kernel and implement my own version of this program.
 
 Funnily enough, I was talking to a friend @Steve2 at work about some of the techniques demonstrated within the video and started to tell him how I intend to write my very own version of Shellgame that conceptually provides the same type of functionality. At this particular point, I really didn't know he was actually friends with @Metlstorm, and the next thing you know I'm talking to @Metlstorm via email about his version of the program he wrote some time ago. Unfortunately, he didn't have the source code available so I took it upon myself to write my own implementation. 
